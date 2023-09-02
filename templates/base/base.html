@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--==Title===============================-->
+    <title>{% block title %}{% endblock title %}</title>
+
+    {% load static %}
+    <!--==Stylesheet=======================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+    <!--==Fav-icon=========================================================-->
+    <link rel="shortcut icon" href="{% static 'images/base/fav-icon.webp' %}"/>
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static "css/slick.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/select2.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/datepicker.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style2.css" %}"> {% endcomment %}
+
+    <!--==Using-Font-Awesome-for-Icons=====================================-->
+    <script src="https://kit.fontawesome.com/6bd6c771de.js" crossorigin="anonymous"></script>
+
+    <!--==Import-Font-Family-From-Google-Font======================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+     <!--==Import-Pacifico-and-Arvo-From-Google-Font================-->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> 
+ 
+ 
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Pacifico&display=swap" rel="stylesheet"> 
+ 
+     {% block header %}{% endblock header %}
+</head>
+<body>
+
+    <!--==nav-top-bar===================================-->
+    <section class="navigation-container">
+
+    <!--**social-links-and-phone-number*****************-->
+    <div class="social-call">
+        <!--social-links-->
+        <div class="social">
+            <a href="{{sitedata.facebook}}"><i class="fab fa-facebook-f"></i></a>
+            <a href="{{sitedata.twitter}}"><i class="fab fa-twitter"></i></a>
+            <a href="{{sitedata.youtube}}"><i class="fab fa-youtube"></i></a>
+            <a href="{{sitedata.instagram}}"><i class="fab fa-instagram"></i></a>
+        </div>
+        <!--phone-number-->
+        <div class="phone">
+            <span><i class="fa-solid fa-headset"></i> <span>Got Questions?</span> <a href="tel:+{{sitedata.phone}}">+{{sitedata.phone}}</a></span>
+        </div>
+        <!--Register-->
+        <div class="nav-register">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile_view' %}"><i class="fa-solid fa-user"></i>Edit Profile</a>
+            {% else %}
+                <a href="{% url 'register_view' %}"><i class="fa-solid fa-user-plus"></i> Register Your Account</a>
+            {% endif %}
+        </div>
+        <!--pages-->
+        <div class="top-bar-links">
+            <a href="{% url 'staticpost' 'privacy-policy' %}">Privacy Policy</a>
+            <a href="{% url 'staticpost' 'terms-and-conditions' %}">Trems and conditions</a>
+            <a href="{% url 'staticpost' 'about-us' %}">About Us</a>
+            <a href="{% url 'staticpost' 'contact' %}">Contact</a>
+        </div>
+    </div>
+
+
+    <!--**Nav********************************-->
+    <nav class="navigation">
+        
+        <!--logo-->
+        <a href="{% url 'index' %}" class="main-logo" ><strong><img src="{% static 'images/base/fav-icon.webp' %}"/>lanesPharmacy</strong></a>
+        
+        <!--search-->
+        <form class="main-search" action="{% url 'search' %}">
+            <input type="text" name="search" value="{{search}}" placeholder="Search Products Here..." required/>
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+
+        <!--card-and-login-->
+        <div class="cart-login">
+            {% if user.is_authenticated %}
+            <div class="nav-user">
+                <input type="checkbox" class="user-icon-checkbox" id="user-icon">
+                <label for="user-icon" class="user-icon">
+                    <img src="{{user.profile_img.url}}" onerror="this.onerror=null; this.src='{% static 'images/account/profile_img/default_profile.png' %}'"/>
+                </label>
+
+                <div class="user-drop-menu">
+                    {% if user.is_superuser %}
+                    <a href="/admin/" class="nav-drop-box"><i class="fa-solid fa-chart-simple"></i> DashBoard</a>
+                    {% endif %}
+                    <a href="{% url 'order' %}" class="nav-drop-box"><i class="fa-solid fa-layer-group"></i> Order's</a>
+                    <a href="{% url 'profile_view' %}" class="nav-drop-box"><i class="fa-solid fa-user"></i> Profile</a>
+                    <a href="{% url 'logoutUser' %}" class="nav-logout">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                </div>
+            </div>
+            {% else %}
+            <a href="{% url 'login_view' %}" class="nav-login">Login</a>
+            {% endif %}
+            <a href="{% url 'shop_cart' %}" class="nav-cart">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>{{total_cart_item}}</span>
+            </a>
+        </div>
+
+    </nav>
+
+
+    </section>
+
+    <!--==body======================================-->
+    {% block body %}{% endblock body %}
+
+
+
+
+
+    <footer>
+        <div class="footer-container">
+    
+    
+    
+            <!--heading-->
+            <div class="footer-heading">
+                <h4>It’s time to stop scrolling.
+                    <br/>
+                    Let’s create something.
+                </h4>
+    
+                <h3>get in touch.</h3>
+            </div>
+    
+            <!--footer-content-->
+            <div class="footer-content">
+    
+                <!--box-->
+                <div class="footer-box">
+                    <strong>explore</strong>
+                    <ul>
+                        {% for staticposts in staticposts%}
+                            <li style="text-transform: none;"><a href="{{staticposts.slug}}" class="active">{{staticposts.page_name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    
+                <!--box-->
+                <div class="footer-box">
+                    <strong>Social</strong>
+                    <ul>
+                        {% if sitedata.facebook == None %}
+
+                        {% else %}
+                            <li><a href="{{sitedata.facebook}}">Facebook</a></li>
+                        {% endif %}
+
+                        {% if sitedata.instagram == None %}
+
+                        {% else %}
+                            <li><a href="{{sitedata.instagram}}">Instagram</a></li>
+                        {% endif %}
+
+                        {% if sitedata.twitter == None %}
+
+                        {% else %}
+                            <li><a href="{{sitedata.twitter}}">Twitter</a></li>
+                        {% endif %}
+
+                        {% if sitedata.youtube == None %}
+
+                        {% else %}
+                            <li><a href="{{sitedata.youtube}}">Youtube</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+    
+                <!--box-->
+                <div class="footer-box">
+                    <strong>Contact</strong>
+                    <ul>
+                        <li><a href="mailto:{{sitedata.email}}">{{sitedata.email}}</a></li>
+                        <li><a href="tel:+{{sitedata.phone}}">+{{sitedata.phone}}</a></li>
+                    </ul>
+                </div>
+    
+                <!--box-->
+                <div class="footer-box">
+                    <strong>Clanes</strong>
+                    <ul>
+                        <li class="footer-address">{{sitedata.address}}</li>
+                    </ul>
+                </div>
+    
+            </div>
+    
+    
+            <!--footer-bottom-->
+            <div class="footer-bottom">
+    
+                <!--link-->
+                <div class="copyright">
+                </div>  
+                
+                <!--copyright-->
+                <div class="copyright">
+                    <span>Made By {{sitedata.made_by}}</span>
+                    <span>© {{sitedata.copyright}}</span>
+                </div>
+    
+            </div>
+    
+    
+        </div>
+    
+        </footer>
+
+
+    
+    <!-- javascript -->
+    {% comment %} <script src="{% static "js/jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/slick.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/select2.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.countTo.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/datepicker.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/datepicker.en.js" %}"></script>
+    <script src="{% static "js/custom.js" %}"></script>   {% endcomment %}
+
+        {% block p_script %}{% endblock p_script %}
+</body>
+</html>

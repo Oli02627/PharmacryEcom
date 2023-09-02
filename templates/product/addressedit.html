@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% load static %}
+
+<!--==Title========================-->
+{% block title %}Edit Address - ClanesPharmacy{% endblock title %}
+
+{% block body %}
+
+
+    <section id="profile">
+
+    <h2>Edit Address</h2>
+
+        <form action="" method="post" >
+            {% csrf_token %}
+
+    
+
+        <div class="profile-text-container">
+
+    
+        <div class="prifle-name-container">
+            <!--First-Name-->
+            <div class="p-f-name p-input-box">
+                <label>First Name<span>*</span></label>
+                {{form.first_name}}
+            </div>
+            <!--Last-Name-->
+            <div class="p-l-name p-input-box">
+                <label >Last Name<span>*</span></label>
+                {{form.last_name}}
+            </div>
+        </div>
+        <!--phone-->
+        <div class="p-username p-input-box">
+            <label for="Username">Phone<span>*</span></label>
+            {{form.phone}}
+        </div>
+        <!--Address-->
+        <div class="p-bio p-input-box">
+            <label >Address<span>*</span></label>
+            {{form.address}}
+        </div>
+        <!--State-->
+        <div class="p-bio p-input-box">
+            <label >State<span>*</span></label>
+            {{form.state}}
+        </div>
+        <!--city-->
+        <div class="p-bio p-input-box">
+            <label >City<span>*</span></label>
+            {{form.city}}
+        </div>
+        <!--Zip-Code-->
+        <div class="p-bio p-input-box">
+            <label >Zip Code<span>*</span></label>
+            {{form.zip_code}}
+        </div>
+
+        {{form.errors}}
+
+
+        <input type="submit" value="Save">
+
+        </div>
+
+    </form>
+    <br/><br/>
+    </section>
+
+
+    {% endblock body %}

@@ -1,0 +1,187 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% block title %}ClanesPharmacy - Cart{% endblock title %}
+
+{% load static %}
+
+{% block body %}
+
+
+    <section id="cart-page">
+        <!--**Heading**********************-->
+        <h1 class="cart-page-heading"><i class="fa-solid fa-cart-shopping"></i> Your Cart</h1>
+
+        <div class="cart-page-container">
+            <!--**items-container***********-->
+            <div class="cart-items-container">
+                <p style="color: #ff2616; font-weight:400; text-align:center;" id="empty-message"></p>
+                {% if cart|length == 0 %}
+                <p style="color: #ff2616; font-weight:400; text-align:center;" >*Please Add Product in Cart</p>
+                {% endif %}
+                {% for cart in cart %}
+                <!--box-->
+                <div class="cart-item-box">
+                    <!--img-->
+                    <div class="cart-box-img">
+                        <img src="{{cart.product.product_img.url}}" alt="{{cart.product.title}}"/>
+                    </div>
+                    <!--text-->
+                    <div class="cart-box-text">
+                        <div class="cart-box-title">
+                            <strong>{{cart.product.title}}</strong>
+                            <span class="cart-box-color">
+                                {% if cart.color.name == None %}
+                                {% else %}
+                                {{cart.color.name}} ,
+                                {% endif %}
+                                {{cart.size.name}}
+                            
+                            </span>
+                        </div>
+                        <!--quantity-->
+                        <div class="pro-quantity-container">
+                        <strong>*Quantity</strong>
+                        <td class="product-quantity-container">
+                        <div class="product-quantity quantity">
+                            <a href="javascript:void(0)" class="decrement-btn decrease-cart-quanity" pid="{{cart.id}}">-</a>
+                            <span>{{cart.quantity}}</span>
+                            <a href="javascript:void(0)" class="increment-btn increase-cart-quanity" pid="{{cart.id}}">+</a>
+                        </div>
+                        </td>
+                        </div>
+            
+                    </div>
+                    <!--price-->
+                    <div class="cart-box-price">
+                        <span style="font-size:1rem"><b>Amount:</b><span id="cart{{cart.id}}p" style="font-size:1rem">{{cart.product.selling_price}}</span></span>
+                        {% if cart.product.shipping_price == 0 %}
+                        <span class="cart-b-shipping">*Free Shipping <span id="cart{{cart.id}}g" style="font-size:0.8rem; display:none;"></span></span>
+                        {% else %}
+                        <span class="cart-b-shipping" id="cart{{cart.id}}g">*Shipping {{cart.product.shipping_price}}$</span>
+                        {% endif %}
+                        <!--remove-->
+                        <a href="javascript:void(0)" class="removecart"  pid="{{cart.id}}"><i class="fa-solid fa-trash-can"></i> Remove</a>
+                    </div>
+                </div>
+                {% endfor %}
+                
+
+            </div>
+            <!--**summary*******************-->
+            <div class="order-summary">
+                <strong class="order-summary-heading">Order Summary</strong>
+                <div class="summary-box">
+                    <table class="summary-product">
+                        <tr><td>Total Amount</td> <td class="summary-tabel-amount" id="summary-amount">{{summary_amount|floatformat:2}}$</td></tr> 
+                        <tr><td>Total Shipping</td> <td class="summary-tabel-amount" id="summary-shipping">{{summary_shipping|floatformat:2}}$</td></tr>
+                    </table>
+                    <table class="summary-total">
+                        <tr><td class="summary-subtotal-h" >SubTotal Amount</td> <td class="summary-tabel-subamount">$<span id="subtotal-amount" style="color:#333333">{{totalamount|floatformat:2}}</span></td></tr>
+                    </table>
+                    <span>*Including Shipping</span>
+                </div>
+                {% if cart|length == 0 %}
+                    <span class="cart-place-order-btn" style="opacity:0.8;">Ready To Pay</span>
+                {% else %}
+                    <a href="{% url 'checkout' %}" class="cart-place-order-btn">Ready To Pay</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!--==Jquery====================-->
+    <script src="{% static 'js/Jquery.js' %}" type="text/javascript"></script>
+    
+    <!--==Script====================-->
+    <script type="text/javascript">
+
+{% for cart in cart %}
+    document.getElementById("cart{{cart.id}}g").innerText = "*Shipping " + ({{cart.product.shipping_price}} * {{cart.quantity}}).toFixed(2) + "$";
+    document.getElementById("cart{{cart.id}}p").innerText = ({{cart.product.selling_price}} * {{cart.quantity}}).toFixed(2) + "$";
+{% endfor %}
+       
+
+/*==increase-cart-quanity========================*/
+$('.increase-cart-quanity').click(function(){
+    var id = $(this).attr("pid").toString();
+    var eml = this.parentNode.children[1]
+    var eml2 = this.parentNode.parentNode.parentNode.parentNode.children[2].children[1]
+    var eml3 = this.parentNode.parentNode.parentNode.parentNode.children[2].children[0].children[1]
+    $.ajax({
+        type: "GET",
+        url: "pluscart",
+        data: {
+            cart_id:id
+        },
+        success: function (data){
+            eml.innerText = data.quantity
+            document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
+            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
+            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "$";
+            eml4.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
+        },
+    })
+})
+
+
+/*==decrese-cart-quanity===============*/
+$('.decrease-cart-quanity').click(function(){
+    var id = $(this).attr("pid").toString();
+    var eml = this.parentNode.children[1]
+    var eml2 = this.parentNode.parentNode.parentNode.parentNode.children[2].children[1]
+    var eml3 = this.parentNode.parentNode.parentNode.parentNode.children[2].children[0].children[1]
+    $.ajax({
+        type: "GET",
+        url: "minuscart",
+        data: {
+            cart_id:id
+        },
+        success: function (data){
+            eml.innerText = data.quantity
+            document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
+            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
+            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "$";
+        }
+    })
+})
+
+
+/*==Remove-Cart===============*/
+$('.removecart').click(function(){
+    var id = $(this).attr("pid").toString();
+    var eml = this
+    $.ajax({
+        type: "GET",
+        url: "removecart",
+        data: {
+            cart_id:id
+        },
+        success: function (data){
+            document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
+            eml.parentNode.parentNode.remove()
+            location.reload();
+            if (data.total_amount === 0) { // or !== if you're checking for not zero
+            document.getElementById("empty-message").innerText = "*Please Add Product in Cart";
+            location.reload();
+            }
+            
+        }
+    })
+})
+
+
+
+    </script>
+
+
+{% endblock body %}

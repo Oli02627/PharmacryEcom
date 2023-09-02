@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--==Title=================================-->
+    <title>Create Account - ClanesPharmacy</title>
+
+    <!--==CSS===================================-->
+    {% load static %}
+    <!--==Stylesheet=======================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+    <!--==Fav-icon=========================================================-->
+    <link rel="shortcut icon" href="{% static 'images/base/fav-icon.webp' %}"/>
+
+    <!--==Using-Font-Awesome-for-Icons=====================================-->
+    <script src="https://kit.fontawesome.com/6bd6c771de.js" crossorigin="anonymous"></script>
+
+    <!--==Import-Font-Family-From-Google-Font======================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!--==font===============-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> 
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Pacifico&display=swap" rel="stylesheet"> 
+
+</head>
+<body style="background-color: #f9f9f9;">
+
+    <!--==signup================================-->
+    <div class="signup-container">
+    
+    <section id="signup">
+
+        <!--**Logo*****************-->
+        <a href="{% url 'index' %}" class="login-page-logo">
+            <strong><img src="{% static 'images/base/fav-icon.webp' %}"/>lanesPharmacy</strong>
+        </a>
+
+        <fieldset>
+            <legend>Sign Up</legend>
+        </fieldset>
+
+
+        <span class="error-box">{{form.errors}}</span>
+
+        <!--**Form*****************-->
+        <form method="post">
+            {% csrf_token %}
+            <!--Username-->
+            {{form.username}}
+            <!--name-container-->
+            <div class="reg-name-container">
+                {{form.first_name}}
+                {{form.last_name}}
+            </div>
+            <!--email-->
+            {{form.email}}
+            <!--email-->
+            {{form.phone}}
+            <!--password-->
+            {{form.password1}}
+            <!--Re-Password-->
+            {{form.password2}}
+            
+            <div class="signup-addresss">
+                <fieldset>
+                    <legend>Address</legend>
+                </fieldset>
+            </div>
+            <!--address-->
+            {{form.address}}
+            <!--state-->
+            {{form.state}}
+            <!--city-->
+            {{form.city}}
+            <!--zip-code-->
+            {{form.zip_code}}
+    
+            <button>Sign Up</button>
+        </form>
+
+
+        <fieldset>
+            <legend>Log in</legend>
+        </fieldset>
+
+        <!--**sign-up-Btn************-->
+        <div class="login-signup-btn">
+            <span>Already Have A Account</span>
+            <!--signup-btn-->
+            <a href="{% url 'login_view' %}" class="signup-btn">Login</a>    
+        </div>
+    
+    </section>
+
+
+    <div class="signup-img">
+        <img src="{% static 'images/account/sign-up.svg' %}" alt="ClanesPharmacy - Sign Up"/>
+    </div>
+
+    </div>
+
+
+</body>
+</html>

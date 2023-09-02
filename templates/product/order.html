@@ -1,0 +1,137 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% block title %}ClanesPharmacy - Order{% endblock title %}
+
+{% load static %}
+
+{% block body %}
+
+
+    <section id="cart-page">
+        <!--**Heading**********************-->
+        <h1 class="cart-page-heading"><i class="fa-solid fa-layer-group"></i> Your Order's</h1>
+
+        <div class="cart-page-container order-page-container">
+            <!--**items-container***********-->
+            <div class="cart-items-container">
+                {% if order|length == 0 %}
+                <p style="color: #ff2616; font-weight:400; text-align:center;" >*Please Place Order</p>
+                {% endif %}
+
+                {% for order in order %}
+                <!--box-->
+                <div class="cart-item-box order-place-box">
+                    <!--img-->
+                    <div class="cart-box-img">
+                        <img src="{{order.product.product_img.url}}" alt=""/>
+                    </div>
+                    <!--text-->
+                    <div class="cart-box-text">
+                        <div class="cart-box-title">
+                            <strong>{{order.product.title}}</strong>
+                            <span class="cart-box-color">C: {{order.color}} , S: {{order.size}}</span>
+                        </div>
+                        <!--quantity-->
+                        <div class="place-order-quantity">
+                            <strong>Quantity:</strong>
+                            <span>{{order.quantity}}</span>
+                        </div>
+            
+                    </div>
+                    <!--price-->
+                    <div class="cart-box-price">
+                        <span><b>Price:</b>${{order.order_price|floatformat:2}}</span>
+                        {% if order.status == "Pending" %}
+                        <span class="place-order-status"><b>Status:</b> Pending</span>  
+                        <progress value="1" class="pending" max="100"></progress>
+                        {% elif order.status == "Accepted" %}
+                        <span class="place-order-status"><b>Status:</b> Accepted</span>  
+                        <progress value="25" class="accepted"  max="100"></progress>
+                        {% elif order.status == "Packed" %}
+                        <span class="place-order-status"><b>Status:</b> Packed</span>  
+                        <progress value="50" class="packed" max="100"></progress>
+                        {% elif order.status == "On The Way" %}
+                        <span class="place-order-status"><b>Status:</b> On The Way</span>  
+                        <progress value="75" class="shipped" max="100"></progress>
+                        {% elif order.status == "Delivered" %}
+                        <span class="place-order-status"><b>Status:</b> Delivered</span>  
+                        <progress value="100" class="delivered" max="100"></progress>
+                        {% elif order.status == "Cancel" %}
+                        <span class="place-order-status"><b>Status:</b> Close</span>  
+                        <progress value="100" class="cancel" max="100"></progress>
+                        {% endif %}
+                    </div>
+
+                    {% if order.status == "Cancel" %}
+                    <span class="order-page-order-message">*You Order is <b style="color:red; margin:0px 5px; font-weight:500;"> *Closed </b> Due to Security Reason, Payment Will be <b style="color:red; margin:0px 5px; font-weight:500;"> Refund</b> in 7 days</span>
+                    {% endif %}
+
+                    {% if order.status == "Pending" %}
+                    <span class="order-page-order-message">*Waiting For Payment Verification</span>
+                    {% endif %}
+
+                    {% if order.status == "Accepted" %}
+                    <span class="order-page-order-message">*Your Order is Accepted. You will get your order with in <b style="color:red; margin:0px 5px; font-weight:500;">7-14 days</b>. Thank Your For The Order</span>
+                    {% endif %}
+
+                    {% if order.status == "Packed" %}
+                    <span class="order-page-order-message">*Your Order is ready for shipped. Thank Your</span>
+                    {% endif %}
+
+                    {% if order.status == "On The Way" %}
+                    <span class="order-page-order-message">*Your Order is Shipped.</span>
+                    {% endif %}
+
+                    {% if order.status == "Delivered" %}
+                    <span class="order-page-order-message">*Your Order is Delivered, Please <a style=" color:refd; margin:0px 5px; text-decoration:underline;">*Rate The Product</a></span>
+                    {% endif %}
+                    
+                </div>
+                {% endfor %}
+                
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!--==Jquery====================-->
+    <script src="{% static 'js/Jquery.js' %}" type="text/javascript"></script>
+    
+    <!--==Script====================-->
+    <script type="text/javascript">
+       
+/*==quantity-increse-&-decrese-input==*/
+    $(document).ready(function () {
+
+$('.increment-btn').click(function (e) {
+    e.preventDefault();
+    var incre_value = $(this).parents('.quantity').find('.qty-input').val();
+    var value = parseInt(incre_value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value<10){
+        value++;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+    }
+
+});
+
+$('.decrement-btn').click(function (e) {
+    e.preventDefault();
+    var decre_value = $(this).parents('.quantity').find('.qty-input').val();
+    var value = parseInt(decre_value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value>1){
+        value--;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+    }
+});
+
+});
+</script>
+
+
+{% endblock body %}

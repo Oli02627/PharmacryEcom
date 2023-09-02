@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+
+<!--==Title========================-->
+{% block title %}Change Password - ClanesPharmacy{% endblock title %}
+
+{% block body %}
+
+
+
+
+    <section id="profile">
+    
+
+
+    <section id="change-password">
+
+
+        <h2>Change Password?</h2>
+
+        <form action="" method="post" novalidate>
+
+            {% csrf_token %}
+            <div class="profile-pass-box">
+                <label>Old Password<span>*</span></label>
+                {{form2.old_password}}
+            </div>
+            <div class="profile-pass-box">
+                <label>New Password<span>*</span></label>
+                {{form2.new_password1}}
+            </div>
+            <div class="profile-pass-box">
+                <label>Repeat Password<span>*</span></label>
+                {{form2.new_password2}}
+            </div>
+
+            <!--error-->
+            <span class="change-password-errors">{{form2.errors}}</span>
+
+            <input type="submit" value="Change Password"/>
+
+            <!--forget-password-->
+            <a href="{% url 'reset_password' %}" class="changepass-forget-btn">Forget Password?</a>    
+
+        </form>
+    </section>
+
+
+    
+
+
+
+    </section>
+
+    {% endblock body %}

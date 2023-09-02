@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+
+<!--==Title========================-->
+{% block title %}
+{% if viewall == True %}
+View All Products
+{% else %}
+Search
+{% endif %}
+{% endblock title %}
+
+
+
+
+<!--==Body=========================-->
+{% block body %}
+
+
+<section class="search-page">
+
+    <!--==Heading==-->
+    <div class="search-heading">
+        <h1>
+            {% if viewall == True %}
+            View All Products
+            {% else %}
+            Search Results: <span>"{{search}}"</span></h1>
+            {% endif %}
+    </div>
+
+    {% if product|length < 1 %}
+    <div class="search-not-found">
+        {% load static %}
+        <img src="{% static 'images/404/not_found.svg' %}" />
+        <span>Product Not Found, <b>Try Another</b></span>
+    </div>
+    {% endif %}
+
+
+    <div class="search-product-box-container">
+    {% for product in product%}
+     <!--**box******************-->
+     <div class="product-box">
+        <!--img-->
+        <a href="{% url 'product_page' product.category product.permalink %}" class="product-img">
+            <img src="{{product.product_img.url}}" alt="{{product.title}}"/>
+        </a>
+        <!--text-->
+        <div class="product-text"> 
+            <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
+            <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
+            <p>{{product.description}}</p> 
+            <span>${{product.selling_price}}</span>
+            <del>${{product.discounted_price}}</del>
+        </div> 
+    </div>
+    {% endfor %}
+    </div>
+
+</section>
+
+
+{% endblock body %}

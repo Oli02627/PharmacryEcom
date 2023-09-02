@@ -1,0 +1,396 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% block title %}ClanesPharmacy - Home{% endblock title %}
+
+{% block header %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/swiper-bundle.min.css' %}"/>
+
+
+{% endblock header %}
+
+{% block body %}
+
+<section class="banner_wrapper">
+       <!--==Content============================-->
+       <div class="hero-content">
+        <!--**text****************-->
+        <div class="hero-text">
+            <h1>Feel Better About Finding Good Products</h1>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id, vitae ex! Fuga similique repudiandae molestiae libero.</p>
+            <!--btns-->
+            <div class="hero-text-btns">
+                <a href="/all-products"><i class="fa-solid fa-magnifying-glass"></i> Find Products</a>
+                <a href="/contact"><i class="fa-solid fa-check"></i> Help Support</a>
+            </div>
+        </div>
+        <!--**img*****************-->
+        <div class="hero-img">
+            <img src="{% static 'images/main-bg.png' %}" alt="model">
+        </div>
+    </div>
+</section>
+
+<!--==service-info===========================-->
+<section class="what-we-provide">
+
+  <!--**box1***********-->
+  <div class="w-info-box w-i-box1">
+      <!--icon-->
+      <div class="w-info-icon">
+          <i class="fa-solid fa-capsules"></i>
+      </div>
+      <!--text-->
+      <div class="w-info-text">
+          <strong>Specialised Service</strong>
+          <p>Lorem ipsum dolor sit </p>
+      </div>
+  </div>
+  <!--**box2***********-->
+  <div class="w-info-box w-i-box2">
+      <!--icon-->
+      <div class="w-info-icon">
+          <i class="fa-regular fa-comments"></i>
+      </div>
+      <!--text-->
+      <div class="w-info-text">
+          <strong>24/7 Help Support</strong>
+          <p>Lorem ipsum dolor sit </p>
+      </div>
+  </div>
+  <!--**box3***********-->
+  <div class="w-info-box w-i-box3">
+      <!--icon-->
+      <div class="w-info-icon">
+          <i class="fa-solid fa-square-poll-horizontal"></i>
+      </div>
+      <!--text-->
+      <div class="w-info-text">
+          <strong>Get Good Products</strong>
+          <p>Lorem ipsum dolor sit </p>
+      </div>
+  </div>
+
+</section><!--end-->
+
+<!--==All Products====================================-->
+<section id="product-section">
+    <!--==Heading==================-->
+    <div class="product-main-heading">
+        <h3>Latest Products</h3>
+        {% if all|length > 0 %}
+        <a href="/all-products">View All</a>
+        {% endif %}
+    </div>
+    {% if all|length == 0 %}
+            <p style="color: #ff2616; font-weight:400; text-align:center; margin-top:20px;" >*No Products Available</p>
+    {% endif %}
+    <!--==Container=================-->
+    <div class="swiper mySwiperProduct">
+    <div class="swiper-wrapper">
+        {% for product in all|slice:":10" %}
+        <div class="swiper-slide">
+        <!--**box******************-->
+        <div class="product-box">
+            <!--img-->
+            <a href="{% url 'product_page' product.category product.permalink %}" class="product-img">
+                <img src="{{product.product_img.url}}" alt="{{product.title}}"/>
+            </a>
+            <!--text-->
+            <div class="product-text"> 
+                <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
+                <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
+                <p>{{product.description}}</p> 
+                <span>${{product.selling_price}}</span>
+                <del>${{product.discounted_price}}</del>
+            </div> 
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    </div>
+
+</section>
+
+<!--==Why-choose-us=======================-->
+<section id="why-choose-us">
+
+  <!--**left*****************-->
+  <div class="why-choose-us-left">
+      <h3>Why Choose Us?</h3>
+      <!--==container====-->
+      <div class="why-choose-box-container">
+          <!--**box**-->
+          <div class="why-choose-box">
+              <!--icon-->
+              <i class="fa-solid fa-check"></i>
+              <!--text-->
+              <div class="why-choose-box-text">
+                  <strong>Advance 24h Support</strong>
+                  <p>Lorem ipsum dolor sit</p>
+              </div>
+          </div>
+          <!--**box**-->
+          <div class="why-choose-box">
+              <!--icon-->
+              <i class="fa-solid fa-check"></i>
+              <!--text-->
+              <div class="why-choose-box-text">
+                  <strong>Fast Delivery</strong>
+                  <p>Lorem ipsum dolor sit</p>
+              </div>
+          </div>
+          <!--**box**-->
+          <div class="why-choose-box">
+              <!--icon-->
+              <i class="fa-solid fa-check"></i>
+              <!--text-->
+              <div class="why-choose-box-text">
+                  <strong>Medical Support</strong>
+                  <p>Lorem ipsum dolor sit</p>
+              </div>
+          </div>
+          <!--**box**-->
+          <div class="why-choose-box">
+              <!--icon-->
+              <i class="fa-solid fa-check"></i>
+              <!--text-->
+              <div class="why-choose-box-text">
+                  <strong>Money Back Warrenty</strong>
+                  <p>Lorem ipsum dolor sit</p>
+              </div>
+          </div>
+      </div>
+      <!--==btn========-->
+      <a href="/contact" class="why-choose-us-btn">Contact Us</a>
+  </div><!--left-end-->
+
+  <!--**right*******************-->
+  <div class="why-choose-us-right">
+      <h3>Help & Support?<br/>
+          Contact Us
+      </h3>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis iste, quam ratione rerum aliquid esse vero placeat? debitis velit cupiditate magni cumque corporis.</p>
+      <!--==container====-->
+      <div class="w-right-contact-container">
+          <!--**box**-->
+          <div class="w-right-contact-box">
+              <i class="fa-solid fa-phone"></i>
+              <!--text-->
+              <div class="w-right-contact-box-text">
+                  <span>Call Us Now</span>
+                  <strong>+123 4567 89</strong>
+              </div>
+          </div>
+          <!--**box**-->
+          <div class="w-right-contact-box">
+              <i class="fa-solid fa-envelope"></i>
+              <!--text-->
+              <div class="w-right-contact-box-text">
+                  <span>Mail Us</span>
+                  <strong>info@example.com</strong>
+              </div>
+          </div>
+      </div>
+  </div><!--right-end-->
+
+</section><!--end-->
+
+
+<!--==Team===========================-->
+<section id="our-team">
+
+  <!--**heading*****************-->
+  <div class="our-team-heading">
+      <h3>Meet Our Specialist</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+  </div>
+
+  <!--**team-container***********-->
+  <div class="team-box-container">
+      <!-- Swiper -->
+      <div class="swiper mySwiperteam">
+      <div class="swiper-wrapper">
+          <!--**1***-->
+          <div class="swiper-slide">
+              <!--**box**-->
+              <div class="team-box">
+                  <!--img-->
+                  <div class="team-img">
+                      <img src="{% static 'images/d5.png' %}" alt="">
+                  </div>
+                  <!--text-->
+                  <div class="team-text">
+                      <strong>Dr. Paradox Alex</strong>
+                      <span>Skin Specialist</span>
+                  </div>
+              </div>
+          </div><!--end-slide-->
+          <!--**1***-->
+          <div class="swiper-slide">
+              <!--**box**-->
+              <div class="team-box">
+                  <!--img-->
+                  <div class="team-img">
+                      <img src="{% static 'images/d1.png' %}" alt="">
+                  </div>
+                  <!--text-->
+                  <div class="team-text">
+                      <strong>Dr. Paradox Alex</strong>
+                      <span>Skin Specialist</span>
+                  </div>
+              </div>
+          </div><!--end-slide-->
+          <!--**1***-->
+          <div class="swiper-slide">
+              <!--**box**-->
+              <div class="team-box">
+                  <!--img-->
+                  <div class="team-img">
+                      <img src="{% static 'images/d2.png' %}" alt="">
+                  </div>
+                  <!--text-->
+                  <div class="team-text">
+                      <strong>Dr. Paradox Alex</strong>
+                      <span>Skin Specialist</span>
+                  </div>
+              </div>
+          </div><!--end-slide-->
+          <!--**1***-->
+          <div class="swiper-slide">
+              <!--**box**-->
+              <div class="team-box">
+                  <!--img-->
+                  <div class="team-img">
+                      <img src="{% static 'images/d3.png' %}" alt="">
+                  </div>
+                  <!--text-->
+                  <div class="team-text">
+                      <strong>Dr. Paradox Alex</strong>
+                      <span>Skin Specialist</span>
+                  </div>
+              </div>
+          </div><!--end-slide-->
+          <!--**1***-->
+          <div class="swiper-slide">
+              <!--**box**-->
+              <div class="team-box">
+                  <!--img-->
+                  <div class="team-img">
+                      <img src="{% static 'images/d4.png' %}" alt="">
+                  </div>
+                  <!--text-->
+                  <div class="team-text">
+                      <strong>Dr. Paradox Alex</strong>
+                      <span>Skin Specialist</span>
+                  </div>
+              </div>
+          </div><!--end-slide-->
+      </div><!--wrapper-end-->
+      <div class="swiper-pagination"></div>
+      </div><!--swiper-end-->
+
+      
+  
+  </div>
+
+</section><!--team-end-->
+
+
+{% if sp1.all|length == 0 %}
+{% else %}
+<!--==All category Products====================================-->
+<section id="product-section">
+    <!--==Heading==================-->
+    <div class="product-main-heading">
+        <h3>{{sonetitle.section_title}}</h3>
+        {% if all|length > 0 %}
+        <a href="/search?search={{sonetitle.category}}">View All</a>
+        {% endif %}
+    </div>
+    <!--==Container=================-->
+    <div class="swiper mySwiperProduct">
+    <div class="swiper-wrapper">
+        {% for product in sp1|slice:":10" %}
+        <div class="swiper-slide">
+        <!--**box******************-->
+        <div class="product-box">
+            <!--img-->
+            <a href="{% url 'product_page' product.category product.permalink %}" class="product-img">
+                <img src="{{product.product_img.url}}" alt="{{product.title}}"/>
+            </a>
+            <!--text-->
+            <div class="product-text"> 
+                <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
+                <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
+                <p>{{product.description}}</p> 
+                <span>${{product.selling_price}}</span>
+                <del>${{product.discounted_price}}</del>
+            </div> 
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock body %}
+
+{% block p_script %}
+
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiperProduct", {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        440: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+      },
+    });
+
+     /*--team--*/
+     var swiper = new Swiper(".mySwiperteam", {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        560: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        950: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1250: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+      },
+    });
+    
+  </script>
+{% endblock p_script %}

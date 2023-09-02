@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% load static %}
+
+<!--==Title========================-->
+{% block title %}Profile - ClanesPharmacy{% endblock title %}
+
+{% block body %}
+
+
+    <section id="profile">
+
+    <h2>Need to update your public profile?</h2>
+    
+    {% if messages %}
+    <ul class="messages-profile">
+        {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+    
+        <!--profile-img-->
+        <div class="profile-img-container">
+        <div class="profle-img">
+            <img src="{{user.profile_img.url}}" onerror="this.onerror=null; this.src='{% static 'images/account/profile_img/default_profile.png' %}'"/>
+        </div>
+        {{form.profile_img}}
+        </div>
+
+        <div class="profile-text-container">
+
+        <!--username-->
+        <div class="p-username p-input-box">
+            <label for="Username">Username<span>*</span></label>
+            <div class="profile-not-change-box">{{user.username}}</div>
+        </div>
+
+        <div class="prifle-name-container">
+            <!--First-Name-->
+            <div class="p-f-name p-input-box">
+                <label>First Name<span>*</span></label>
+                {{form.first_name}}
+            </div>
+            <!--Last-Name-->
+            <div class="p-l-name p-input-box">
+                <label >Last Name<span>*</span></label>
+                {{form.last_name}}
+            </div>
+        </div>
+
+        <!--email-->
+        <div class="p-email p-input-box">
+            <label>Email<span>*</span></label>
+            <div class="profile-not-change-box">{{user.email}}</div>
+        </div>
+        <!--username-->
+        <div class="p-username p-input-box">
+            <label for="Username">Phone<span>*</span></label>
+            {{form.phone}}
+        </div>
+        <!--Address-->
+        <div class="p-bio p-input-box">
+            <label >Address<span>*</span></label>
+            {{form.address}}
+        </div>
+        <!--State-->
+        <div class="p-bio p-input-box">
+            <label >State<span>*</span></label>
+            {{form.state}}
+        </div>
+        <!--city-->
+        <div class="p-bio p-input-box">
+            <label >City<span>*</span></label>
+            {{form.city}}
+        </div>
+        <!--Zip-Code-->
+        <div class="p-bio p-input-box">
+            <label >Zip Code<span>*</span></label>
+            {{form.zip_code}}
+        </div>
+
+        {{form.errors}}
+
+
+        <input type="submit" value="Update">
+
+        </div>
+
+    </form>
+
+
+    <section id="change-password">
+        <h2>Do You Want To Change Password?</h2>
+
+        <form>
+            <a href="{% url 'userchangepass' %}" class="go-to-change-pass-btn"><i class="fa-solid fa-lock"></i> Change Password</a>
+        </form>
+    </section>
+
+
+    
+
+
+
+    </section>
+
+    {% endblock body %}

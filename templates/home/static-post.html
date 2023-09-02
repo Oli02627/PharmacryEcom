@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% load static %}
+
+<!--==Title========================-->
+{% block title %} {{staticpost.title}}{% endblock title %}
+
+
+<!--==Body=========================-->
+{% block body %}
+
+
+<!--==Static-page=========================-->
+<section class="static-page">
+
+    {% if staticpost == None %}
+    <div class="search-not-found" style="margin:60px auto">
+        <img src="{% static 'images/404/not_found.svg' %}" />
+        <span>Page Not Found, <b>404</b></span>
+    </div>
+
+    {% else %}
+    <div class="static-container">
+
+        <div class="static-title">
+            <span class="static-page-title-label">Title</span>
+            <h1>{{staticpost.title}}</h1>
+        </div>
+
+        <div class="static-content">
+            <p>{{staticpost.content | safe}}</p>
+        </div>
+
+
+    </div>
+    {% endif %}
+
+</section>
+
+
+
+{% endblock body %}

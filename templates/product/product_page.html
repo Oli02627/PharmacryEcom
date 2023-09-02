@@ -1,0 +1,185 @@
+{% extends 'base/base.html' %} <!--get all content from base.html-->
+
+{% block title %}{{product.title}} - ClanesPharmacy{% endblock title %}
+
+{% load static %}
+
+{% block body %}
+
+    <div class="product-page-container">
+    <!--route-->
+    <span class="link-route">
+            <a href="#">Home</a> > <a href="#">{{product.category}}</a> 
+    </span>
+
+    <!--==Product=================================-->
+    <section id="product-page">
+        
+        <!--**Product-img********-->
+        <div class="product-page-img-container">
+            <!--img-->
+            <div class="product-page-img">
+               <img src="{{product.product_img.url}}" alt="{{product.title}}"/>
+            </div>
+        </div>
+        <!--**product-details***************-->
+        <div class="product-page-details">
+            <!--title-->
+            <strong>{{product.title}}</strong>
+            <strong class="product-category">{{product.category}} - {{product.sub_category}}</strong>
+            <!--price-->
+            <span class="price">${{product.selling_price}} <del id="total-with-discount-price">0$</del></span>
+            
+            <!--small-desc-->
+            <p class="small-desc">{{product.description}}</p>
+            
+            <form action="{% url 'add_to_cart' %}">
+            
+            <div class="size-color">
+            {% if product.color.all.first == None %}         
+            {% else %}
+            <!--color-options-->
+            <div class="product-options color-options">
+                <span>Color's</span>
+                <div class="product-color-options">
+                    {% for pcolor in pcolor %}
+                        <div class="product-color-box">
+                            <input  type="checkbox" id="{{pcolor.name}}" name="color_id" value="{{pcolor.id}}"/>
+                            <label for="{{pcolor.name}}"><img src="/{{pcolor.color_img}}" alt="{{pcolor.name}}"/></label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+
+            {% if product.size.all.first == None %}         
+            {% else %}
+            <!--Size-options-->
+            <div class="product-options">
+                <span>Size</span>
+                <select name="size_id">
+                {% for psize in psize %}
+                    <option value="{{psize.id}}">{{psize.name}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            </div>
+            {% endif %}
+
+            <div class="product-page-carts-btns">
+            <span class="product-page-offer"><i class="fa-solid fa-tag"></i> <span id="product-page-discount"></span>% Discount</span>
+            
+            <div class="quantity-cart">
+            <!--add-cart-btn-->
+                <input type="hidden" value="{{product.id}}" id="prod_id" name="prod_id"/>
+                {% if  request.user.is_authenticated %}
+                {% if item_already_in_cart %}
+                <a href="{% url 'shop_cart' %}" class="add-cart">Go To Cart</a>
+                {% else %}
+                <button class="add-cart">Add To Cart</button>
+                {% endif %}
+                {% endif %}
+                
+                {% if not  request.user.is_authenticated %}
+                <button class="add-cart">Add To Cart</button>
+                {% endif %}
+            </form>
+            </div>
+
+
+            <div class="page-product-total">
+                <strong>{{product.selling_price}}$  <span style="color:#ff2616;"> + {% if product.shipping_price == 0 %}Free {% else %} {{product.shipping_price}}${% endif %} Shipping</span></strong>
+                <p></p>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <!--==Product-all-info=============================-->
+    <section class="product-all-info">
+        <!--product-info-menu-->
+        <ul class="product-info-menu">
+            <li class="active product-info-list" data-filter="heighlights">Heighlights</li>
+            <li class="product-info-list" data-filter="ingredients">INGREDIENTS</li>
+            <li class="product-info-list" data-filter="howuse">HOW TO USE</li>
+            <li class="product-info-list" data-filter="protips">PRO TIPS</li>
+        </ul>
+        <!--heighlight-->
+        <div class="heighlight-info-container product-info-container heighlights active">
+           <p>{{product.heighlights | safe}}</p>
+        </div>
+        <!--ingredients-->
+        <div class="ingredients-info-container product-info-container ingredients">
+            <p>{{product.ingredients | safe}}</p>
+        </div>
+        <!--how-to-use-->
+        <div class="howuse-info-container product-info-container howuse">
+            <p>{{product.how_use | safe}}</p>
+        </div>
+        <!--pro-tips-->
+        <div class="protips-info-container product-info-container protips">
+            <p>{{product.pro_tips}}</p>
+        </div>
+
+    </section>
+    
+    </div>
+
+
+
+    <!--==Jquery====================-->
+    <script src="{% static 'js/Jquery.js' %}" type="text/javascript"></script>
+    
+    <!--==Script====================-->
+    <script type="text/javascript">
+
+/*==product-info-menu===*/
+$(document).on('click','.product-info-menu li', function(){
+            $(this).addClass('active').siblings().removeClass('active')
+        });
+/*==product-info-details-filter==*/
+        $(document).ready(function(){
+            $('.product-info-list').click(function(){
+                const value = $(this).attr('data-filter');
+                if(value == 'all'){
+                    $('.product-info-container').filter('.'+value).show('1000');
+                }
+                else{
+                    $('.product-info-container').not('.'+value).hide('1000');
+                    $('.product-info-container').filter('.'+value).show('1000');
+                }
+            });
+        });
+
+        // the selector will match all input controls of type :checkbox
+// and attach a click event handler 
+$(document).ready(function(){
+    $('input:checkbox').click(function() {
+        $('input:checkbox').not(this).prop('checked', false);
+    });
+});
+
+
+
+const div = document.getElementById('product-page-discount');
+
+    var discount = {{product.discounted_price}}/{{product.selling_price}}*100  
+    div.innerHTML = discount.toFixed(2)
+
+
+const div2 = document.getElementById('total-with-discount-price');
+
+var totalprice = {{product.discounted_price}}+{{product.selling_price}}  
+div2.innerHTML = totalprice.toFixed(2)+'$'
+
+{% if product.color.all.first != None %}
+/*===color-first-checked=============*/
+    document.getElementById("{{product.color.all.first}}").checked = true;
+{% endif %}
+</script>
+    
+    
+
+    {% endblock body %}
