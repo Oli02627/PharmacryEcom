@@ -36,8 +36,8 @@
             <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
             <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
             <p>{{product.description}}</p> 
-            <span>${{product.selling_price}}</span>
-            <del>${{product.discounted_price}}</del>
+            <span>€{{product.selling_price}}</span>
+            <del>€{{product.discounted_price}}</del>
         </div> 
     </div>
     {% endfor %}

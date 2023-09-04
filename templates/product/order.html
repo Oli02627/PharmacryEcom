@@ -40,7 +40,7 @@
                     </div>
                     <!--price-->
                     <div class="cart-box-price">
-                        <span><b>Price:</b>${{order.order_price|floatformat:2}}</span>
+                        <span><b>Price:</b>€{{order.order_price|floatformat:2}}</span>
                         {% if order.status == "Pending" %}
                         <span class="place-order-status"><b>Status:</b> Pending</span>  
                         <progress value="1" class="pending" max="100"></progress>

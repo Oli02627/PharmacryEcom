@@ -28,7 +28,7 @@
             <strong>{{product.title}}</strong>
             <strong class="product-category">{{product.category}} - {{product.sub_category}}</strong>
             <!--price-->
-            <span class="price">${{product.selling_price}} <del id="total-with-discount-price">0$</del></span>
+            <span class="price">€{{product.selling_price}} <del id="total-with-discount-price">0€</del></span>
             
             <!--small-desc-->
             <p class="small-desc">{{product.description}}</p>
@@ -89,7 +89,7 @@
 
 
             <div class="page-product-total">
-                <strong>{{product.selling_price}}$  <span style="color:#ff2616;"> + {% if product.shipping_price == 0 %}Free {% else %} {{product.shipping_price}}${% endif %} Shipping</span></strong>
+                <strong>{{product.selling_price}}€  <span style="color:#ff2616;"> + {% if product.shipping_price == 0 %}Free {% else %} {{product.shipping_price}}€{% endif %} Shipping</span></strong>
                 <p></p>
             </div>
         </div>
@@ -172,7 +172,7 @@ const div = document.getElementById('product-page-discount');
 const div2 = document.getElementById('total-with-discount-price');
 
 var totalprice = {{product.discounted_price}}+{{product.selling_price}}  
-div2.innerHTML = totalprice.toFixed(2)+'$'
+div2.innerHTML = totalprice.toFixed(2)+'€'
 
 {% if product.color.all.first != None %}
 /*===color-first-checked=============*/

@@ -57,7 +57,7 @@
                         {% if cart.product.shipping_price == 0 %}
                         <span class="cart-b-shipping">*Free Shipping <span id="cart{{cart.id}}g" style="font-size:0.8rem; display:none;"></span></span>
                         {% else %}
-                        <span class="cart-b-shipping" id="cart{{cart.id}}g">*Shipping {{cart.product.shipping_price}}$</span>
+                        <span class="cart-b-shipping" id="cart{{cart.id}}g">*Shipping {{cart.product.shipping_price}}€</span>
                         {% endif %}
                         <!--remove-->
                         <a href="javascript:void(0)" class="removecart"  pid="{{cart.id}}"><i class="fa-solid fa-trash-can"></i> Remove</a>
@@ -72,11 +72,11 @@
                 <strong class="order-summary-heading">Order Summary</strong>
                 <div class="summary-box">
                     <table class="summary-product">
-                        <tr><td>Total Amount</td> <td class="summary-tabel-amount" id="summary-amount">{{summary_amount|floatformat:2}}$</td></tr> 
-                        <tr><td>Total Shipping</td> <td class="summary-tabel-amount" id="summary-shipping">{{summary_shipping|floatformat:2}}$</td></tr>
+                        <tr><td>Total Amount</td> <td class="summary-tabel-amount" id="summary-amount">{{summary_amount|floatformat:2}}€</td></tr> 
+                        <tr><td>Total Shipping</td> <td class="summary-tabel-amount" id="summary-shipping">{{summary_shipping|floatformat:2}}€</td></tr>
                     </table>
                     <table class="summary-total">
-                        <tr><td class="summary-subtotal-h" >SubTotal Amount</td> <td class="summary-tabel-subamount">$<span id="subtotal-amount" style="color:#333333">{{totalamount|floatformat:2}}</span></td></tr>
+                        <tr><td class="summary-subtotal-h" >SubTotal Amount</td> <td class="summary-tabel-subamount">€<span id="subtotal-amount" style="color:#333333">{{totalamount|floatformat:2}}</span></td></tr>
                     </table>
                     <span>*Including Shipping</span>
                 </div>
@@ -100,8 +100,8 @@
     <script type="text/javascript">
 
 {% for cart in cart %}
-    document.getElementById("cart{{cart.id}}g").innerText = "*Shipping " + ({{cart.product.shipping_price}} * {{cart.quantity}}).toFixed(2) + "$";
-    document.getElementById("cart{{cart.id}}p").innerText = ({{cart.product.selling_price}} * {{cart.quantity}}).toFixed(2) + "$";
+    document.getElementById("cart{{cart.id}}g").innerText = "*Shipping " + ({{cart.product.shipping_price}} * {{cart.quantity}}).toFixed(2) + "€";
+    document.getElementById("cart{{cart.id}}p").innerText = ({{cart.product.selling_price}} * {{cart.quantity}}).toFixed(2) + "€";
 {% endfor %}
        
 
@@ -120,11 +120,11 @@ $('.increase-cart-quanity').click(function(){
         success: function (data){
             eml.innerText = data.quantity
             document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
-            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
-            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
-            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
-            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "$";
-            eml4.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "€";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "€";
+            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "€";
+            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "€";
+            eml4.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "€";
         },
     })
 })
@@ -145,10 +145,10 @@ $('.decrease-cart-quanity').click(function(){
         success: function (data){
             eml.innerText = data.quantity
             document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
-            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
-            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
-            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "$";
-            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "$";
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "€";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "€";
+            eml2.innerText = "*Shipping " + (data.shippingprice * data.quantity).toFixed(2) + "€";
+            eml3.innerText =  (data.productprice * data.quantity).toFixed(2) + "€";
         }
     })
 })
@@ -166,8 +166,8 @@ $('.removecart').click(function(){
         },
         success: function (data){
             document.getElementById("subtotal-amount").innerText = data.total_amount.toFixed(2);
-            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "$";
-            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "$";
+            document.getElementById("summary-amount").innerText = data.summary_amount.toFixed(2) + "€";
+            document.getElementById("summary-shipping").innerText = data.summary_shipping.toFixed(2) + "€";
             eml.parentNode.parentNode.remove()
             location.reload();
             if (data.total_amount === 0) { // or !== if you're checking for not zero

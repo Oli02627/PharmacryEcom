@@ -17,7 +17,7 @@
         <!--**text****************-->
         <div class="hero-text">
             <h1>Feel Better About Finding Good Products</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id, vitae ex! Fuga similique repudiandae molestiae libero.</p>
+            <p>See below to find products or too seek help</p>
             <!--btns-->
             <div class="hero-text-btns">
                 <a href="/all-products"><i class="fa-solid fa-magnifying-glass"></i> Find Products</a>
@@ -101,8 +101,8 @@
                 <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
                 <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
                 <p>{{product.description}}</p> 
-                <span>${{product.selling_price}}</span>
-                <del>${{product.discounted_price}}</del>
+                <span>€{{product.selling_price}}</span>
+                <del>€{{product.discounted_price}}</del>
             </div> 
         </div>
         </div>
@@ -128,7 +128,6 @@
               <!--text-->
               <div class="why-choose-box-text">
                   <strong>Advance 24h Support</strong>
-                  <p>Lorem ipsum dolor sit</p>
               </div>
           </div>
           <!--**box**-->
@@ -138,7 +137,6 @@
               <!--text-->
               <div class="why-choose-box-text">
                   <strong>Fast Delivery</strong>
-                  <p>Lorem ipsum dolor sit</p>
               </div>
           </div>
           <!--**box**-->
@@ -148,7 +146,6 @@
               <!--text-->
               <div class="why-choose-box-text">
                   <strong>Medical Support</strong>
-                  <p>Lorem ipsum dolor sit</p>
               </div>
           </div>
           <!--**box**-->
@@ -158,7 +155,6 @@
               <!--text-->
               <div class="why-choose-box-text">
                   <strong>Money Back Warrenty</strong>
-                  <p>Lorem ipsum dolor sit</p>
               </div>
           </div>
       </div>
@@ -171,7 +167,6 @@
       <h3>Help & Support?<br/>
           Contact Us
       </h3>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis iste, quam ratione rerum aliquid esse vero placeat? debitis velit cupiditate magni cumque corporis.</p>
       <!--==container====-->
       <div class="w-right-contact-container">
           <!--**box**-->
@@ -204,7 +199,7 @@
   <!--**heading*****************-->
   <div class="our-team-heading">
       <h3>Meet Our Specialist</h3>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <p>Qualified Specialists with 10 years experience</p>
   </div>
 
   <!--**team-container***********-->
@@ -325,8 +320,8 @@
                 <a href="{% url 'product_page' product.category product.permalink %}" class="product-box-p-name">{{product.title}}</a>
                 <span class="p-box-category">{{product.category}} > {{product.sub_category}}</span>
                 <p>{{product.description}}</p> 
-                <span>${{product.selling_price}}</span>
-                <del>${{product.discounted_price}}</del>
+                <span>€{{product.selling_price}}</span>
+                <del>€{{product.discounted_price}}</del>
             </div> 
         </div>
         </div>

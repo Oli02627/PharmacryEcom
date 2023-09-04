@@ -53,8 +53,8 @@
                     <strong>{{cart_item.product.title}}</strong>
                     <span>Quantity: {{cart_item.quantity}}</span>
                     <span class="checkout-p-cs">{{cart_item.color}}, {{cart_item.size}}</span>
-                    <span class="checkout-p-price">Price: {{cart_item.total_cost}}$</span>
-                    <span class="checkout-p-shipping">*Shipping {{cart_item.total_shipping|floatformat:2}}$</span>
+                    <span class="checkout-p-price">Price: {{cart_item.total_cost}}€</span>
+                    <span class="checkout-p-shipping">*Shipping {{cart_item.total_shipping|floatformat:2}}€</span>
                 </div>
                     {% endfor %}
                 {% endif %}
@@ -66,11 +66,11 @@
                 <strong class="order-summary-heading">Checkout</strong>
                 <div class="summary-box">
                     <table class="summary-product">
-                        <tr><td>Total Amount</td> <td class="summary-tabel-amount">{{summary_amount|floatformat:2}}$</td></tr>
-                        <tr><td>Total Shipping</td> <td class="summary-tabel-amount">{{summary_shipping|floatformat:2}}$</td></tr>
+                        <tr><td>Total Amount</td> <td class="summary-tabel-amount">{{summary_amount|floatformat:2}}€</td></tr>
+                        <tr><td>Total Shipping</td> <td class="summary-tabel-amount">{{summary_shipping|floatformat:2}}€</td></tr>
                     </table>
                     <table class="summary-total">
-                        <tr><td class="summary-subtotal-h">SubTotal Amount</td> <td class="summary-tabel-subamount">${{total_amount|floatformat:2}}</td></tr>
+                        <tr><td class="summary-subtotal-h">SubTotal Amount</td> <td class="summary-tabel-subamount">€{{total_amount|floatformat:2}}</td></tr>
                     </table>
                     <span>*Including Shipping</span>
                 </div>

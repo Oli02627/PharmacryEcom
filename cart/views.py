@@ -28,7 +28,7 @@ def create_checkout_session(request):
             payment_method_types=['card'],
             line_items=[{
                 'price_data': {
-                    'currency': 'usd',
+                    'currency': 'eur',
                     'product_data': {
                         'name': 'Total Amount',
                     },
